@@ -18,7 +18,7 @@ export default function componentStyleOverrides(theme: any) {
                     backgroundImage: 'none'
                 },
                 rounded: {
-                    borderRadius: `${theme?.customization?.borderRadius}px`
+                    borderRadius: 2
                 }
             }
         },
@@ -90,50 +90,63 @@ export default function componentStyleOverrides(theme: any) {
         },
         MuiInputBase: {
             styleOverrides: {
+               
                 input: {
-                    color: theme.textDark,
                     '&::placeholder': {
-                        color: theme.darkTextSecondary,
+                        color: "#fff !important",
                         fontSize: '0.875rem'
                     }
                 }
             }
         },
+        MuiInputLabel: {
+        },
+        // MuiOutlinedInput: {
+        //     styleOverrides: {
+        //         root: {
+        //             background: bgColor,
+        //             borderRadius: `${theme?.customization?.borderRadius}px`,
+        //             '& .MuiOutlinedInput-notchedOutline': {
+        //                 borderColor: theme.colors?.grey400
+        //             },
+        //             '&:hover $notchedOutline': {
+        //                 borderColor: theme.colors?.primaryLight
+        //             },
+        //             '&.MuiInputBase-multiline': {
+        //                 padding: 1
+        //             }
+        //         },
+        //         input: {
+        //             fontWeight: 500,
+        //             background: bgColor,
+        //             padding: '15.5px 14px',
+        //             borderRadius: `${theme?.customization?.borderRadius}px`,
+        //             '&.MuiInputBase-inputSizeSmall': {
+        //                 padding: '10px 14px',
+        //                 '&.MuiInputBase-inputAdornedStart': {
+        //                     paddingLeft: 0
+        //                 }
+        //             }
+        //         },
+        //         inputAdornedStart: {
+        //             paddingLeft: 4
+        //         },
+        //         notchedOutline: {
+        //             borderRadius: `${theme?.customization?.borderRadius}px`
+        //         }
+        //     }
+        // },
+
+        
+
         MuiOutlinedInput: {
             styleOverrides: {
                 root: {
-                    background: bgColor,
-                    borderRadius: `${theme?.customization?.borderRadius}px`,
-                    '& .MuiOutlinedInput-notchedOutline': {
-                        borderColor: theme.colors?.grey400
-                    },
-                    '&:hover $notchedOutline': {
-                        borderColor: theme.colors?.primaryLight
-                    },
-                    '&.MuiInputBase-multiline': {
-                        padding: 1
-                    }
-                },
-                input: {
-                    fontWeight: 500,
-                    background: bgColor,
-                    padding: '15.5px 14px',
-                    borderRadius: `${theme?.customization?.borderRadius}px`,
-                    '&.MuiInputBase-inputSizeSmall': {
-                        padding: '10px 14px',
-                        '&.MuiInputBase-inputAdornedStart': {
-                            paddingLeft: 0
-                        }
-                    }
-                },
-                inputAdornedStart: {
-                    paddingLeft: 4
-                },
-                notchedOutline: {
-                    borderRadius: `${theme?.customization?.borderRadius}px`
+                    backgroundColor: '#fff',
                 }
             }
         },
+
         MuiSlider: {
             styleOverrides: {
                 root: {

@@ -5,7 +5,22 @@ import themeTypography from "./typography";
 
 
 export const theme = createTheme({ 
-    palette: { ...themePalette },
+    // palette: { ...themePalette },
+    palette: { 
+        primary: { 
+            main: "#8B8CA7",
+            light: "#fff"
+        },  
+    },
     typography: { ...themeTypography },
-    components: { ...componentStyleOverrides }  
-})
+    // components: { ...componentStyleOverrides }  
+    components: { 
+        MuiInputLabel: { 
+            styleOverrides: { 
+                root: { 
+                    color: "#fff"
+                }
+            }
+        },
+    }
+})  
