@@ -11,6 +11,11 @@ export const InputField: React.FC<any> = ({ label, available }) => {
                     <span className={classes["input-heading-available"]}>Available: {available}</span>
                 </div>
                 <div className={classes["input-body"]}>
+                    <input
+                        className={classes["input-body-text-field"]}
+                        type="number"
+                        placeholder='0'
+                    />
                     <select
                         className={classes["input-body-select"]}
                     >
@@ -19,12 +24,6 @@ export const InputField: React.FC<any> = ({ label, available }) => {
                         <option value="opel">Opel</option>
                         <option value="audi">Audi</option>
                     </select>
-            
-                    <input
-                        className={classes["input-body-text-field"]}
-                        type="number"
-                        placeholder='0'
-                    />
                 </div>
 
             </div>

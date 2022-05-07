@@ -11,8 +11,11 @@ export const theme = createTheme({
             main: "#8B8CA7",
             light: "#fff"
         },  
+        text: { 
+            primary: "#8B8CA7"
+        }
     },
-    typography: { ...themeTypography },
+    // typography: { ...themeTypography },
     // components: { ...componentStyleOverrides }  
     components: { 
         MuiInputLabel: { 

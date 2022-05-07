@@ -9,8 +9,8 @@ const Header: React.FC = () => {
                 <Box display="flex" justifyContent="center">
                     <Box mr={3}>
                         <Button>
-                            <Link href="/liquidity">
-                                <a>liquidity</a>
+                            <Link href="/pool">
+                                <a>pool</a>
                             </Link>
                         </Button>
                     </Box>
