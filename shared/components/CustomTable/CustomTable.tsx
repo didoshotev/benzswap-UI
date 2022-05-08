@@ -9,8 +9,6 @@ import Paper from '@mui/material/Paper';
 import classes from "./custom-table.module.scss";
 import { Box } from '@mui/material';
 
-import { ChainId, Token } from '@uniswap/sdk'
-
 
 function createData(
 	name: string,
@@ -36,11 +34,6 @@ export const CustomTable = () => {
 		console.log('clicked');
 	}
 
-	React.useEffect(() => { 
-		const chainId = ChainId.MAINNET;
-		console.log('chainId: ', chainId);
-	}, [])
-	
 	return (
 		<TableContainer
 			sx={{
