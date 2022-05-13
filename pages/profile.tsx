@@ -13,7 +13,6 @@ const Profile: NextPage = () => {
     const [linkBalance, setLinkBalance] = useState(0);
     const { benzInstance } = useBenzContext();
 
-
     const handleFetch = async () => {
         if (!benzInstance || !account) { return; }
         console.log(benzInstance);

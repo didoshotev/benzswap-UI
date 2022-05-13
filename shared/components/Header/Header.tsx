@@ -2,12 +2,23 @@ import { AppBar, Box, Button, Menu } from '@mui/material'
 import Link from 'next/link'
 import { useWallet } from 'use-wallet'
 import { shortenAddress } from '../../utils/format';
+import { addNetwork, changeNetwork, shouldChangeNetwork } from '../../utils/window-ethereum';
+import configuration from "../../config";
 
 const Header: React.FC = () => {
     const { connect, isConnected, account } = useWallet();
 
     const handleConnect = async () => {
-        await connect("injected");
+        const shouldChange = await shouldChangeNetwork(configuration.chainId);
+        console.log('shouldChange: ', shouldChange);
+        // const res = await addNetwork(configuration);
+        // console.log('addNetwork: ', res);
+        try {
+            await changeNetwork(configuration);
+        } catch (error) {
+            return;
+        }
+        // await connect("injected");
     }
     return (
         <>
