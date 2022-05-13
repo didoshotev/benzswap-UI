@@ -1,15 +1,14 @@
 import { AppBar, Box, Button, Menu } from '@mui/material'
 import Link from 'next/link'
 import { useWallet } from 'use-wallet'
+import { shortenAddress } from '../../utils/format';
 
 const Header: React.FC = () => {
     const { connect, isConnected, account } = useWallet();
 
-
     const handleConnect = async () => {
         await connect("injected");
     }
-
     return (
         <>
             <AppBar position='static' color='transparent' sx={{ p: 1 }}>
@@ -47,8 +46,15 @@ const Header: React.FC = () => {
                     <Box>
                         {isConnected()
                             ?
-                            <Box color={"red"}>
-                                {account}
+                            <Box color="#dbdde6">
+                                <Link href="/profile">
+                                    <Button
+                                        variant="contained"
+                                    >
+                                        {shortenAddress(account)}
+                                    </Button>
+                                </Link>
+
                             </Box>
 
                             :

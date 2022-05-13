@@ -1,5 +1,11 @@
 import { createContext } from "react";
+import { BenzSwap } from "../../benz/BenzSwap/BenzSwap";
 
-const BenzContext = createContext({ benzInstance: null });
+interface IBenzContext { 
+    benzInstance: BenzSwap | undefined
+}
+
+
+const BenzContext = createContext<IBenzContext>({ benzInstance: undefined });
 
 export default BenzContext;
