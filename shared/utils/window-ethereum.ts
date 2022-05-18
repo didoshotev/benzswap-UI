@@ -1,8 +1,8 @@
 import ConfigurationType from "../benz/types/ConfigurationType";
 
-window.ethereum.on('accountsChanged', () => { 
-    window.location.reload();
-})
+// window.ethereum.on('accountsChanged', () => { 
+//     window.location.reload();
+// })
 
 export const shouldChangeNetwork = async (targetNetwork: string): Promise<boolean> => {
     if (!window.ethereum) {
