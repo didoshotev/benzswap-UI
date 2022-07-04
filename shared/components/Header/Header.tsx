@@ -10,9 +10,7 @@ const Header: React.FC = () => {
 
     const handleConnect = async () => {
         const shouldChange = await shouldChangeNetwork(configuration.chainId);
-        console.log('shouldChange: ', shouldChange);
-        // const res = await addNetwork(configuration);
-        // console.log('addNetwork: ', res);
+
         try {
             await changeNetwork(configuration);
         } catch (error) {
@@ -28,6 +26,14 @@ const Header: React.FC = () => {
                         <Button>
                             <Link href="/pool">
                                 <a>pool</a>
+                            </Link>
+                        </Button>
+                    </Box>
+
+                    <Box mr={3}>
+                        <Button>
+                            <Link href="/lottery">
+                                <a>Lottery</a>
                             </Link>
                         </Button>
                     </Box>
