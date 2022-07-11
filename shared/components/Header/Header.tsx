@@ -6,36 +6,39 @@ import { addNetwork, changeNetwork, shouldChangeNetwork } from '../../utils/wind
 import configuration from "../../config";
 import { useMoralis } from 'react-moralis';
 import { useEffect } from 'react';
+import { useBenzContext } from '../../benz/context/Benz/BenzContextProvider';
 
 const Header: React.FC = () => {
     // const { connect, isConnected, account } = useWallet();
-    const { enableWeb3, isWeb3Enabled, isWeb3EnableLoading, account, Moralis, deactivateWeb3 } = useMoralis();
+    const { enableWeb3, isWeb3Enabled, isWeb3EnableLoading, account, Moralis, deactivateWeb3 } = useMoralis()
+    const { connectWeb3 } = useBenzContext()
 
-    useEffect(() => {
-        if (isWeb3Enabled) { return; }
-        if (typeof window !== "undefined" && window.localStorage.getItem("connected")) {
-            enableWeb3();
-        }
-    }, [isWeb3Enabled])
+    // useEffect(() => {
+    //     if (isWeb3Enabled) { return; }
+    //     if (typeof window !== "undefined" && window.localStorage.getItem("connected")) {
+    //         enableWeb3();
+    //     }
+    // }, [isWeb3Enabled])
 
-    useEffect(() => {
-        Moralis.onAccountChanged((account) => {
-            console.log('account changed to: ', account);
-            if (account == null) {
-                window.localStorage.removeItem("connected")
-                deactivateWeb3()
-                console.log('Null account found');
-            }
-        })
-    }, [])
+    // useEffect(() => {
+    //     Moralis.onAccountChanged((account) => {
+    //         console.log('account changed to: ', account);
+    //         if (account == null) {
+    //             window.localStorage.removeItem("connected")
+    //             deactivateWeb3()
+    //             console.log('Null account found');
+    //         }
+    //     })
+    // }, [])
 
     const handleConnect = async () => {
-        await enableWeb3();
+        connectWeb3()
+        // await enableWeb3();
 
-        if (typeof window !== "undefined") {
-            console.log('setting window item');
-            window.localStorage.setItem("connected", "injected");
-        }
+        // if (typeof window !== "undefined") {
+        //     console.log('setting window item');
+        //     window.localStorage.setItem("connected", "injected");
+        // }
     }
 
     // const handleConnect = async () => {

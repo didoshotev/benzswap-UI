@@ -5,9 +5,9 @@ import { theme } from '../styles/mui/theme';
 import Header from '../shared/components/Header/Header';
 import { UseWalletProvider } from 'use-wallet';
 import configuration from "../shared/config";
-import { BenzContextProvider } from '../shared/context/BenzContext/BenzContextProvider';
 import { MoralisProvider } from 'react-moralis';
 import LibHeader from '../shared/components/Header/LibHeader';
+import { BenzContextProvider } from '../shared/benz/context/Benz/BenzContextProvider';
 
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
@@ -30,17 +30,19 @@ const Providers: React.FC<any> = ({ children }) => {
 	return (
 		<>
 			<MoralisProvider initializeOnMount={false}>
-				<UseWalletProvider
-					connectors={{
-						injected: {
-							chainId: [1, 4]
-						}
-					}}
-				>
-					<BenzContextProvider>
-						{children}
-					</BenzContextProvider>
-				</UseWalletProvider>
+				<BenzContextProvider>
+					<UseWalletProvider
+						connectors={{
+							injected: {
+								chainId: [1, 4]
+							}
+						}}
+					>
+						<BenzContextProvider>
+							{children}
+						</BenzContextProvider>
+					</UseWalletProvider>
+				</BenzContextProvider>
 			</MoralisProvider>
 		</>
 	)
