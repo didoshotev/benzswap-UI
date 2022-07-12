@@ -1,6 +1,6 @@
 import { ethers, providers } from "ethers"
 import React, { createContext, useContext, useEffect, useState } from "react"
-import { useMoralis } from "react-moralis"
+import { useChain, useMoralis } from "react-moralis"
 
 interface IBenzContext {
     // account: , 
@@ -14,55 +14,65 @@ export type IProps = {
 }
 
 const BenzContextProvider: React.FC<IProps> = ({ children }) => {
-    const { account, chainId, isWeb3Enabled, isWeb3EnableLoading, enableWeb3, web3, user, Moralis, deactivateWeb3 } = useMoralis()
+    const { account, isWeb3Enabled, isWeb3EnableLoading, enableWeb3, web3, user, Moralis, deactivateWeb3 } = useMoralis()
+    const { switchNetwork, chainId, chain } = useChain();
     const [provider, setProvider] = useState<ethers.providers.Provider | null>(null)
     const [signer, setSigner] = useState<ethers.Signer | null>()
 
+
+    // refresh handler
     useEffect(() => {
         if (isWeb3Enabled) { return; }
         if (typeof window !== "undefined" && window.localStorage.getItem("connected")) {
-            console.log("Enabling Web3...!")
-            enableWeb3()
+            connectWeb3()
         }
     }, [isWeb3Enabled])
 
-
+    // deactivate web3 handler
     useEffect(() => {
         Moralis.onAccountChanged((account) => {
-            console.log('account changed to: ', account)
             if (account == null) {
                 window.localStorage.removeItem("connected")
                 deactivateWeb3()
-                console.log('Null account found')
             }
         })
     }, [])
 
-
-    const connectWeb3 = async () => {
-        await enableWeb3();
-
-        if (typeof window !== "undefined") {
-            console.log('setting window item')
+    // activate web3 handler
+    useEffect(() => {
+        const setWeb3 = async () => {
             await changeSignerAndProvider()
             window.localStorage.setItem("connected", "injected")
         }
+
+        if(isWeb3Enabled) { 
+            console.log('chainId: ', chainId);
+            ethers.utils.hexValue
+            setWeb3()
+        }
+
+    }, [isWeb3Enabled, account])
+
+
+    const connectWeb3 = async () => {
+        await enableWeb3();
     }
 
-    // TODO: FIX MORALIS CONNECTION
+
     const changeSignerAndProvider = async () => {
         const moralisProvider: any = Moralis.provider
         const accountAddress: any = account
         const currChainId: any = chainId;
-        
-        const newProvider = new ethers.providers.Web3Provider(moralisProvider, currChainId)
+
+        const newProvider = new ethers.providers.Web3Provider(moralisProvider)
         const newSigner = newProvider.getSigner(accountAddress)
-        console.log('accountAddress: ', accountAddress);
-        console.log('new Provider: ', newProvider);
-        console.log('new Signer: ', newSigner);
 
         setProvider(newProvider)
         setSigner(newSigner)
+    }
+
+    const changeChainTo = async() => { 
+
     }
 
     const value = {
