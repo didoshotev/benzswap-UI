@@ -7,50 +7,20 @@ import configuration from "../../config";
 import { useMoralis } from 'react-moralis';
 import { useEffect } from 'react';
 import { useBenzContext } from '../../benz/context/Benz/BenzContextProvider';
+import { SUPPORTED_NETWORKS } from '../../utils/constants';
 
 const Header: React.FC = () => {
     // const { connect, isConnected, account } = useWallet();
     const { enableWeb3, isWeb3Enabled, isWeb3EnableLoading, account, Moralis, deactivateWeb3 } = useMoralis()
-    const { connectWeb3 } = useBenzContext()
-
-    // useEffect(() => {
-    //     if (isWeb3Enabled) { return; }
-    //     if (typeof window !== "undefined" && window.localStorage.getItem("connected")) {
-    //         enableWeb3();
-    //     }
-    // }, [isWeb3Enabled])
-
-    // useEffect(() => {
-    //     Moralis.onAccountChanged((account) => {
-    //         console.log('account changed to: ', account);
-    //         if (account == null) {
-    //             window.localStorage.removeItem("connected")
-    //             deactivateWeb3()
-    //             console.log('Null account found');
-    //         }
-    //     })
-    // }, [])
+    const { connectWeb3, changeChainTo } = useBenzContext()
 
     const handleConnect = async () => {
         connectWeb3()
-        // await enableWeb3();
-
-        // if (typeof window !== "undefined") {
-        //     console.log('setting window item');
-        //     window.localStorage.setItem("connected", "injected");
-        // }
     }
 
-    // const handleConnect = async () => {
-    //     const shouldChange = await shouldChangeNetwork(configuration.chainId);
-
-    //     try {
-    //         await changeNetwork(configuration);
-    //     } catch (error) {
-    //         return;
-    //     }
-    //     // await connect("injected");
-    // }
+    const handleChangeChain = async () => {
+        changeChainTo(SUPPORTED_NETWORKS[1337])
+    }
 
     return (
         <>
@@ -97,7 +67,7 @@ const Header: React.FC = () => {
                     <Box>
                         {account
                             ?
-                            <Box color="#dbdde6">
+                            <Box display="flex">
                                 <Link href="/profile">
                                     <Button
                                         variant="contained"
@@ -105,16 +75,26 @@ const Header: React.FC = () => {
                                         {shortenAddress(account)}
                                     </Button>
                                 </Link>
-
+                                <Button
+                                    onClick={handleChangeChain}
+                                    variant="contained"
+                                    color="secondary"
+                                    disabled={isWeb3EnableLoading}
+                                    sx={{ ml: 2}}
+                                >
+                                    Change Network to Hardhat
+                                </Button>
                             </Box>
                             :
-                            <Button
-                                onClick={handleConnect}
-                                variant="contained"
-                                disabled={isWeb3EnableLoading}
-                            >
-                                Connect Wallet
-                            </Button>
+                            <>
+                                <Button
+                                    onClick={handleConnect}
+                                    variant="contained"
+                                    disabled={isWeb3EnableLoading}
+                                >
+                                    Connect Wallet
+                                </Button>
+                            </>
                         }
                     </Box>
                 </Box>
