@@ -1,7 +1,7 @@
 import { ethers, providers } from "ethers"
 import React, { createContext, useContext, useEffect, useState } from "react"
 import { useChain, useMoralis } from "react-moralis"
-import { ISupportedNetworks, SUPPORTED_NETWORKS } from "../../../utils/constants"
+import { ISupportedNetworks, SUPPORTED_NETWORKS, TypeChain } from "../../../utils/constants"
 
 interface IBenzContext {
     // account: , 
@@ -46,7 +46,7 @@ const BenzContextProvider: React.FC<IProps> = ({ children }) => {
             window.localStorage.setItem("connected", "injected")
         }
 
-        if(isWeb3Enabled) { 
+        if (isWeb3Enabled) {
             setWeb3()
         }
 
@@ -70,22 +70,28 @@ const BenzContextProvider: React.FC<IProps> = ({ children }) => {
         setSigner(newSigner)
     }
 
-    const changeChainTo = async(chainIdTo: string) => { 
-        if (!(parseInt(chainIdTo) in SUPPORTED_NETWORKS)) {
-            console.log(`${chainIdTo} Chain Not Supported!`)
+    const changeChainTo = async (network: TypeChain) => {
+        if (!(network.chainId in SUPPORTED_NETWORKS)) {
+            console.log(`${network.chainId} Chain Not Supported!`)
             return null;
         }
-        
+
         try {
-            await switchNetwork(chainIdTo)
+            await switchNetwork(network.chainIdHex)
         } catch (error) {
-            // ERROR message
-            console.error(`${chainIdTo} Chain Not Supported!`)                       
+            console.error(`${network.name} Chain Not Supported!`)
         }
     }
 
     const value = {
-        account, chainId, isWeb3Enabled, connectWeb3, signer, provider, changeChainTo
+        account,
+        chainId: chainId ? parseInt(chainId) : null,
+        chainIdHex: chainId,
+        isWeb3Enabled,
+        connectWeb3,
+        signer,
+        provider,
+        changeChainTo
     }
 
     return (

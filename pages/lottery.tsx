@@ -2,11 +2,15 @@
 import { Box, Button, Typography } from '@mui/material'
 import { BigNumber, Contract, ethers } from 'ethers'
 import type { NextPage } from 'next'
-import { useEffect, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import { useMoralis, useWeb3Contract } from 'react-moralis'
 import { abi, contactAddresses } from "../constants"
+import { LotteryContextProvider, useLottery } from '../shared/lottery/context/LotteryContextProvider'
+import { NextPageWithLayout } from "./_app"
 
-const Lottery: NextPage = () => {
+
+
+const Lottery: NextPageWithLayout = () => {
     const { chainId: chainIdHex, isWeb3Enabled } = useMoralis()
     const chainId: any = parseInt(chainIdHex)
     const raffleAddress = chainId in contactAddresses ? (contactAddresses[chainId.toString()][0]) : null
@@ -14,6 +18,9 @@ const Lottery: NextPage = () => {
     const [numberOfPlayers, setNumberOfPlayers] = useState<BigNumber>(BigNumber.from(0));
 
     const [raffleInstance, setRaffleInstance] = useState(null)
+
+    // const { lottery } = useLottery()
+    // console.log('LOTTERY: ', lottery);
 
     // const { data, error, fetch, isFetching, isLoading }
     const { runContractFunction: getEnteranceFee } = useWeb3Contract({
@@ -67,6 +74,15 @@ const Lottery: NextPage = () => {
                 <Typography variant="h6">Participants Count: {numberOfPlayers.toString()}</Typography>
             </Box>
         </Box>
+    )
+}
+
+
+Lottery.getLayout = function getLayout(page: ReactElement) {
+    console.log('in Lottery.getLayout');
+    
+    return (
+        <LotteryContextProvider>{page}</LotteryContextProvider>
     )
 }
 

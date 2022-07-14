@@ -7,20 +7,23 @@ import configuration from "../../config";
 import { useMoralis } from 'react-moralis';
 import { useEffect } from 'react';
 import { useBenzContext } from '../../benz/context/Benz/BenzContextProvider';
-import { SUPPORTED_NETWORKS } from '../../utils/constants';
+import { SUPPORTED_NETWORKS, SUPPORTED_NETWORKS_INFO } from '../../utils/constants';
 
 const Header: React.FC = () => {
     // const { connect, isConnected, account } = useWallet();
     const { enableWeb3, isWeb3Enabled, isWeb3EnableLoading, account, Moralis, deactivateWeb3 } = useMoralis()
-    const { connectWeb3, changeChainTo } = useBenzContext()
+    const { connectWeb3, changeChainTo, chainId } = useBenzContext()
+
 
     const handleConnect = async () => {
         connectWeb3()
     }
 
     const handleChangeChain = async () => {
-        changeChainTo(SUPPORTED_NETWORKS[1337])
+        // changeChainTo(SUPPORTED_NETWORKS_INFO.HARDHAT.chainId);
+        changeChainTo(SUPPORTED_NETWORKS_INFO.RINKEBY);
     }
+
 
     return (
         <>
@@ -75,15 +78,26 @@ const Header: React.FC = () => {
                                         {shortenAddress(account)}
                                     </Button>
                                 </Link>
-                                <Button
-                                    onClick={handleChangeChain}
-                                    variant="contained"
-                                    color="secondary"
-                                    disabled={isWeb3EnableLoading}
-                                    sx={{ ml: 2}}
-                                >
-                                    Change Network to Hardhat
-                                </Button>
+                                {chainId !== SUPPORTED_NETWORKS_INFO.HARDHAT.chainId ?
+                                    <Button
+                                        onClick={handleChangeChain}
+                                        variant="contained"
+                                        color="secondary"
+                                        disabled={isWeb3EnableLoading}
+                                        sx={{ ml: 2 }}
+                                    >
+                                        Change Network to Hardhat
+                                    </Button>
+                                    :
+                                    <Button
+                                        onClick={handleChangeChain}
+                                        variant="contained"
+                                        color="secondary"
+                                        sx={{ ml: 2 }}
+                                    >
+                                        Network: { SUPPORTED_NETWORKS_INFO.HARDHAT.name }
+                                    </Button>
+                                }
                             </Box>
                             :
                             <>

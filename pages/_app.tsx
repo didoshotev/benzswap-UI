@@ -8,20 +8,27 @@ import configuration from "../shared/config";
 import { MoralisProvider } from 'react-moralis';
 import LibHeader from '../shared/components/Header/LibHeader';
 import { BenzContextProvider } from '../shared/benz/context/Benz/BenzContextProvider';
+import { ReactElement, ReactNode } from 'react';
+import type { NextPage } from 'next'
 
 
-const App: React.FC<AppProps> = ({ Component, pageProps }) => {
-	return (
-		<StyledEngineProvider injectFirst>
-			<Providers>
-				<CssBaseline />
-				<ThemeProvider theme={theme}>
-					<Header />
-					{/* <LibHeader /> */}
-					<Component {...pageProps} />
-				</ThemeProvider>
-			</Providers>
-		</StyledEngineProvider>
+export type NextPageWithLayout = NextPage & {
+	getLayout?: (page: ReactElement) => ReactNode
+}
+
+
+type AppPropsWithLayout = AppProps & {
+	Component: NextPageWithLayout;
+}
+
+const App = ({ Component, pageProps }: AppPropsWithLayout): unknown => {
+
+	const getLayout = Component.getLayout ?? ((page) => page);
+
+	return getLayout(
+		<Providers>
+			<Component {...pageProps} />
+		</Providers>
 	)
 }
 
@@ -29,21 +36,27 @@ const Providers: React.FC<any> = ({ children }) => {
 
 	return (
 		<>
-			<MoralisProvider initializeOnMount={false}>
-				<BenzContextProvider>
-					<UseWalletProvider
-						connectors={{
-							injected: {
-								chainId: [1, 4]
-							}
-						}}
-					>
-						<BenzContextProvider>
-							{children}
-						</BenzContextProvider>
-					</UseWalletProvider>
-				</BenzContextProvider>
-			</MoralisProvider>
+			<StyledEngineProvider injectFirst>
+				<MoralisProvider initializeOnMount={false}>
+					<BenzContextProvider>
+						<UseWalletProvider
+							connectors={{
+								injected: {
+									chainId: [1, 4]
+								}
+							}}
+						>
+
+							<ThemeProvider theme={theme}>
+								<CssBaseline />
+								<Header />
+								{children}
+
+							</ThemeProvider>
+						</UseWalletProvider>
+					</BenzContextProvider>
+				</MoralisProvider>
+			</StyledEngineProvider>
 		</>
 	)
 }
