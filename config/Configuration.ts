@@ -1,8 +1,8 @@
 import * as dotenv from 'dotenv'
-import { SUPPORTED_NETWORKS, SUPPORTED_NETWORKS_INFO } from '../shared/utils/constants'
+import { SUPPORTED_NETWORKS_INFO } from '../shared/utils/constants'
 import localhost_deployments from '../constants/deployments/deployments.localhost.json'
 dotenv.config({ path: __dirname + '/.env' })
-// import HARDHAT_DEPLOYMENT from ""
+
 
 interface IConfiguration {
     chainId: number
@@ -38,7 +38,7 @@ const Configuration: { [env: string]: IConfiguration } = {
     // production: {},
 }
 
-// export { Configuration }
+
 export default Configuration[process.env.NEXT_APP_STAGE || process.env.NODE_ENV || 'development']
 
 export type { IConfiguration }

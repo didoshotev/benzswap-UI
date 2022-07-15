@@ -8,6 +8,7 @@
     "React": "readonly"
   },
   "rules": { 
-    "no-unused-vars": [1, { "args": "after-used", "argsIgnorePattern": "^_"}] // no warning to vars with _
+    "no-unused-vars": "off"
+    // "no-unused-vars": [1, { "args": "after-used", "argsIgnorePattern": "^_"}] // no warning to vars with _
   }
 }
