@@ -1,13 +1,13 @@
 // @ts-nocheck
 import { Box, Button, Typography } from '@mui/material'
 import { BigNumber, ethers } from 'ethers'
-import { ReactElement, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useMoralis, useWeb3Contract } from 'react-moralis'
 import { abi, contactAddresses } from '../constants'
-import { LotteryContextProvider } from '../shared/lottery/context/LotteryContextProvider'
-import { NextPageWithLayout } from './_app'
+import { useLottery } from '../shared/lottery/context/LotteryContextProvider'
+import type { NextPage } from 'next'
 
-const Lottery: NextPageWithLayout = () => {
+const Lottery: NextPage = () => {
     const { chainId: chainIdHex, isWeb3Enabled } = useMoralis()
     const chainId: any = parseInt(chainIdHex)
     const raffleAddress =
@@ -17,8 +17,7 @@ const Lottery: NextPageWithLayout = () => {
 
     const [raffleInstance, setRaffleInstance] = useState(null)
 
-    // const { lottery } = useLottery()
-    // console.log('LOTTERY: ', lottery);
+    const { lottery } = useLottery()
 
     // const { data, error, fetch, isFetching, isLoading }
     const { runContractFunction: getEnteranceFee } = useWeb3Contract({
@@ -38,7 +37,6 @@ const Lottery: NextPageWithLayout = () => {
             // const raffle = new Contract(raffleAddress, abi, )
 
             const newEntranceFee = await getEnteranceFee()
-            console.log('newEntranceFee: ', newEntranceFee)
             const newNumberOfPlayers = await getNumberOfPlayers()
             if (!newEntranceFee) {
                 return
@@ -78,10 +76,11 @@ const Lottery: NextPageWithLayout = () => {
     )
 }
 
-Lottery.getLayout = function getLayout(page: ReactElement) {
-    console.log('in Lottery.getLayout')
-
-    return <LotteryContextProvider>{page}</LotteryContextProvider>
-}
+// Lottery.getLayout = function getLayout(page: ReactElement) {
+//     return (
+//         <BenzContextProvider>
+//             <LotteryContextProvider>{page}</LotteryContextProvider>
+//         </BenzContextProvider>)
+// }
 
 export default Lottery

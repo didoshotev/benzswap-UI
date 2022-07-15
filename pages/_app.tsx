@@ -1,15 +1,14 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
 import { CssBaseline, StyledEngineProvider, ThemeProvider } from '@mui/material'
-import { theme } from '../styles/mui/theme'
-import Header from '../shared/components/Header/Header'
-import { UseWalletProvider } from 'use-wallet'
-import configuration from '../shared/config'
-import { MoralisProvider } from 'react-moralis'
-import LibHeader from '../shared/components/Header/LibHeader'
-import { BenzContextProvider } from '../shared/benz/context/Benz/BenzContextProvider'
-import { ReactElement, ReactNode } from 'react'
 import type { NextPage } from 'next'
+import type { AppProps } from 'next/app'
+import { ReactElement, ReactNode } from 'react'
+import { MoralisProvider } from 'react-moralis'
+import { UseWalletProvider } from 'use-wallet'
+import { BenzContextProvider } from '../shared/benz/context/Benz/BenzContextProvider'
+import Header from '../shared/components/Header/Header'
+import { LotteryContextProvider } from '../shared/lottery/context/LotteryContextProvider'
+import '../styles/globals.css'
+import { theme } from '../styles/mui/theme'
 
 export type NextPageWithLayout = NextPage & {
     getLayout?: (page: ReactElement) => ReactNode
@@ -35,19 +34,21 @@ const Providers: React.FC<any> = ({ children }) => {
             <StyledEngineProvider injectFirst>
                 <MoralisProvider initializeOnMount={false}>
                     <BenzContextProvider>
-                        <UseWalletProvider
-                            connectors={{
-                                injected: {
-                                    chainId: [1, 4],
-                                },
-                            }}
-                        >
-                            <ThemeProvider theme={theme}>
-                                <CssBaseline />
-                                <Header />
-                                {children}
-                            </ThemeProvider>
-                        </UseWalletProvider>
+                        <LotteryContextProvider>
+                            <UseWalletProvider
+                                connectors={{
+                                    injected: {
+                                        chainId: [1, 4],
+                                    },
+                                }}
+                            >
+                                <ThemeProvider theme={theme}>
+                                    <CssBaseline />
+                                    <Header />
+                                    {children}
+                                </ThemeProvider>
+                            </UseWalletProvider>
+                        </LotteryContextProvider>
                     </BenzContextProvider>
                 </MoralisProvider>
             </StyledEngineProvider>

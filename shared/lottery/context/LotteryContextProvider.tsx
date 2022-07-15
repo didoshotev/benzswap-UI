@@ -11,13 +11,16 @@ export type PropTypes = {
 
 export const LotteryContextProvider: React.FC<PropTypes> = ({ children }) => {
     const [lottery, setLottery] = useState(null)
-    // const { account } = useBenzContext()
+    const { account, provider, signer } = useBenzContext()
 
     useEffect(() => {
-        if (lottery === null) {
-            // const newLottery = new Lottery(Configuration)
+        if (lottery === null && provider) {
+            console.log('Configuration: ', Configuration)
+            console.log(provider)
+            console.log(signer)
+            // const newLottery = new Lottery(Configuration, provider, signer)
         }
-    }, [])
+    }, [signer, provider])
 
     return (
         <LotteryContext.Provider value={{ lottery, setLottery }}>

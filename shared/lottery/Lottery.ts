@@ -1,19 +1,19 @@
-import ConfigurationType from '../benz/types/ConfigurationType'
-import { ExternalProvider, Provider } from '@ethersproject/providers'
+import { Provider } from '@ethersproject/providers'
 import { Contract, ethers } from 'ethers'
+import { IConfiguration } from '../../config/Configuration'
 import ERC20 from '../benz/ERC20'
 
 export class Lottery {
-    config: ConfigurationType
+    config: IConfiguration
 
     account?: string
     provider: Provider
     signer?: ethers.Signer | null
 
     contracts: { [name: string]: Contract }
-    externalTokens?: { [name: string]: any }
+    externalTokens: { [name: string]: any }
 
-    constructor(cfg: ConfigurationType, provider: Provider, signer: ethers.Signer | null = null) {
+    constructor(cfg: IConfiguration, provider: Provider, signer: ethers.Signer | null = null) {
         this.config = cfg
         const { deployments, externalTokens } = cfg
 
@@ -21,8 +21,9 @@ export class Lottery {
         this.signer = signer
 
         // load contracts from deployment
+        // TODO: fix as any
         this.contracts = {}
-        for (const [name, deployment] of Object.entries(deployments)) {
+        for (const [name, deployment] of Object.entries(deployments) as any) {
             const newContract: Contract = new Contract(
                 deployment.address,
                 deployment.abi,
@@ -32,8 +33,9 @@ export class Lottery {
         }
 
         // init ERC20 tokens
+        // TODO: fix as any
         this.externalTokens = {}
-        for (const [symbol, [address, decimal]] of Object.entries(externalTokens)) {
+        for (const [symbol, [address, decimal]] of Object.entries(externalTokens) as any) {
             this.externalTokens[symbol] = new ERC20(this.provider, address, symbol, decimal)
         }
     }

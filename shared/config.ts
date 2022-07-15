@@ -1,4 +1,3 @@
-import { ChainId } from '@uniswap/sdk'
 import ConfigurationType from './benz/types/ConfigurationType'
 
 const configuration: { [env: string]: ConfigurationType } = {
@@ -17,4 +16,4 @@ const configuration: { [env: string]: ConfigurationType } = {
     },
 }
 
-export default configuration[process.env.NEXT_APP_STAGE || 'development']
+export default configuration[process.env.NEXT_PUBLIC_APP_STAGE || 'development']

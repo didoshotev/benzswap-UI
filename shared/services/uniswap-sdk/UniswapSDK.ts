@@ -1,4 +1,4 @@
-import { ChainId, Fetcher, Pair, Route, Token, WETH } from '@uniswap/sdk'
+import { ChainId, Fetcher, Route, Token, WETH } from '@uniswap/sdk'
 import { TOKENS } from '../../utils/constants'
 
 // interface IUniswapSDK = {
@@ -9,7 +9,7 @@ export const UniswapSDK: any = {}
 
 UniswapSDK.fetchPairs = async (token1: Token, token2: Token) => {
     console.log('HEREEE')
-    console.log('ENV: ', process.env.INFURA_ID)
+    console.log('ENV: ', process.env.NEXT_PUBLIC_INFURA_ID)
 
     const DAI = new Token(ChainId.MAINNET, TOKENS[1].DAI.address, TOKENS[1].DAI.decimals)
 

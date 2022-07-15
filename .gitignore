@@ -28,7 +28,7 @@ yarn-error.log*
 # local env files
 .env*.local
 .env
-constants/deployments/deployments.localhost.json
+# constants/deployments/deployments.localhost.json
 
 # vercel
 .vercel
