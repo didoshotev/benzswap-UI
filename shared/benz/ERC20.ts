@@ -1,44 +1,44 @@
-import { Provider, TransactionResponse } from "@ethersproject/providers";
-import { BigNumber, Contract, Signer } from "ethers";
-import { formatUnits } from "ethers/lib/utils";
+import { Provider, TransactionResponse } from '@ethersproject/providers'
+import { BigNumber, Contract, Signer } from 'ethers'
+import { formatUnits } from 'ethers/lib/utils'
 
 class ERC20 {
-    private contract: Contract;
+    private contract: Contract
 
-    address: string;
-    symbol: string;
-    decimals: number;
+    address: string
+    symbol: string
+    decimals: number
 
     constructor(provider: Signer | Provider, address: string, symbol: string, decimals: number) {
-        this.contract = new Contract(address, ABI, provider);
-        this.address = address;
-        this.symbol = symbol;
-        this.decimals = decimals;
+        this.contract = new Contract(address, ABI, provider)
+        this.address = address
+        this.symbol = symbol
+        this.decimals = decimals
     }
 
     connect(signerOrProvider: Signer | Provider) {
-        this.contract = new Contract(this.address, ABI, signerOrProvider);
+        this.contract = new Contract(this.address, ABI, signerOrProvider)
     }
 
     get estimateGas() {
-        return this.contract.estimateGas;
+        return this.contract.estimateGas
     }
 
     totalSupply(): Promise<BigNumber> {
-        return this.contract.totalSupply();
+        return this.contract.totalSupply()
     }
 
     balanceOf(account: string): Promise<BigNumber> {
-        return this.contract.balanceOf(account);
+        return this.contract.balanceOf(account)
     }
 
     transfer(recipient: string, amount: BigNumber): Promise<TransactionResponse> {
-        return this.contract.transfer(recipient, amount);
+        return this.contract.transfer(recipient, amount)
     }
 
     async displayBalanceOf(account: string): Promise<string> {
-        const balance = await this.balanceOf(account);
-        return formatUnits(balance, this.decimals);
+        const balance = await this.balanceOf(account)
+        return formatUnits(balance, this.decimals)
     }
 }
 
@@ -327,4 +327,4 @@ const ABI = [
         stateMutability: 'nonpayable',
         type: 'function',
     },
-];
+]

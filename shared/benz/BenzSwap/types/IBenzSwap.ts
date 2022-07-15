@@ -1,28 +1,27 @@
-import { Provider } from "@ethersproject/providers";
-import { Contract, ethers } from "ethers";
-import ERC20 from "../../ERC20";
-import ConfigurationType from "../../types/ConfigurationType";
-
+import { Provider } from '@ethersproject/providers'
+import { Contract, ethers } from 'ethers'
+import ERC20 from '../../ERC20'
+import ConfigurationType from '../../types/ConfigurationType'
 
 interface IBenzSwap {
-    config: ConfigurationType;
-    myAccount: string | null;
+    config: ConfigurationType
+    myAccount: string | null
 
-    provider: Provider;
+    provider: Provider
     signer?: ethers.Signer
 
-    contracts: { [name: string]: Contract };
+    contracts: { [name: string]: Contract }
     externalTokens: { [name: string]: ERC20 }
 
-    DAI?: ERC20;
-    
-    unlockWallet: (provider: any, account: string) => void;
-    
-    readonly isUnlocked: boolean; 
+    DAI?: ERC20
 
-    getContractByName: (name: string) => Contract;
+    unlockWallet: (provider: any, account: string) => void
 
-    getExternalTokenByName: (name: string) => ERC20; 
+    readonly isUnlocked: boolean
+
+    getContractByName: (name: string) => Contract
+
+    getExternalTokenByName: (name: string) => ERC20
 }
 
 export default IBenzSwap

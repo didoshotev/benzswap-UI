@@ -2,9 +2,7 @@ import { Paper, Box, Container } from '@mui/material'
 import type { NextPage } from 'next'
 import { SwapDialog } from '../components/swap/SwapDialog/SwapDialog'
 
-
 const Swap: NextPage = () => {
-
     return (
         <>
             <Container maxWidth="xl">

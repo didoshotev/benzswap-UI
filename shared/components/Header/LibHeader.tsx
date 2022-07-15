@@ -1,9 +1,7 @@
-import { ConnectButton } from "web3uikit"
-
+import { ConnectButton } from 'web3uikit'
 
 const LibHeader: React.FC = () => {
-
-    return ( 
+    return (
         <>
             <ConnectButton moralisAuth={false} />
         </>

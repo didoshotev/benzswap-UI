@@ -8,8 +8,8 @@ import { getBalance } from '../shared/utils/format'
 
 const Profile: NextPage = () => {
     const { account } = useWallet()
-    const [daiBalance, setDaiBalance] = useState(0);
-    const [linkBalance, setLinkBalance] = useState(0);
+    const [daiBalance, setDaiBalance] = useState(0)
+    const [linkBalance, setLinkBalance] = useState(0)
     // const { benzInstance } = useBenzContext();
 
     // const handleFetch = async () => {
@@ -30,12 +30,8 @@ const Profile: NextPage = () => {
                 <StyledBox>
                     <Typography mb={2}>Address: {account}</Typography>
                     {/* <Button onClick={handleFetch} variant="contained">Get token balances: </Button> */}
-                    <Box mt={2}>
-                        Your  DAI - {daiBalance}
-                    </Box>
-                    <Box mt={2}>
-                        Your  LINK - {linkBalance}
-                    </Box>
+                    <Box mt={2}>Your DAI - {daiBalance}</Box>
+                    <Box mt={2}>Your LINK - {linkBalance}</Box>
                 </StyledBox>
             </Container>
         </>

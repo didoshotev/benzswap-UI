@@ -1,19 +1,19 @@
 import { AppBar, Box, Button, Menu } from '@mui/material'
 import Link from 'next/link'
 import { useWallet } from 'use-wallet'
-import { shortenAddress } from '../../utils/format';
-import { addNetwork, changeNetwork, shouldChangeNetwork } from '../../utils/window-ethereum';
-import configuration from "../../config";
-import { useMoralis } from 'react-moralis';
-import { useEffect } from 'react';
-import { useBenzContext } from '../../benz/context/Benz/BenzContextProvider';
-import { SUPPORTED_NETWORKS, SUPPORTED_NETWORKS_INFO } from '../../utils/constants';
+import { shortenAddress } from '../../utils/format'
+import { addNetwork, changeNetwork, shouldChangeNetwork } from '../../utils/window-ethereum'
+import configuration from '../../config'
+import { useMoralis } from 'react-moralis'
+import { useEffect } from 'react'
+import { useBenzContext } from '../../benz/context/Benz/BenzContextProvider'
+import { SUPPORTED_NETWORKS, SUPPORTED_NETWORKS_INFO } from '../../utils/constants'
 
 const Header: React.FC = () => {
     // const { connect, isConnected, account } = useWallet();
-    const { enableWeb3, isWeb3Enabled, isWeb3EnableLoading, account, Moralis, deactivateWeb3 } = useMoralis()
+    const { enableWeb3, isWeb3Enabled, isWeb3EnableLoading, account, Moralis, deactivateWeb3 } =
+        useMoralis()
     const { connectWeb3, changeChainTo, chainId } = useBenzContext()
-
 
     const handleConnect = async () => {
         connectWeb3()
@@ -21,13 +21,12 @@ const Header: React.FC = () => {
 
     const handleChangeChain = async () => {
         // changeChainTo(SUPPORTED_NETWORKS_INFO.HARDHAT.chainId);
-        changeChainTo(SUPPORTED_NETWORKS_INFO.RINKEBY);
+        changeChainTo(SUPPORTED_NETWORKS_INFO.RINKEBY)
     }
-
 
     return (
         <>
-            <AppBar position='static' color='transparent' sx={{ p: 1 }}>
+            <AppBar position="static" color="transparent" sx={{ p: 1 }}>
                 <Box display="flex" justifyContent="center">
                     <Box mr={3}>
                         <Button>
@@ -68,17 +67,12 @@ const Header: React.FC = () => {
                     </Box>
 
                     <Box>
-                        {account
-                            ?
+                        {account ? (
                             <Box display="flex">
                                 <Link href="/profile">
-                                    <Button
-                                        variant="contained"
-                                    >
-                                        {shortenAddress(account)}
-                                    </Button>
+                                    <Button variant="contained">{shortenAddress(account)}</Button>
                                 </Link>
-                                {chainId !== SUPPORTED_NETWORKS_INFO.HARDHAT.chainId ?
+                                {chainId !== SUPPORTED_NETWORKS_INFO.HARDHAT.chainId ? (
                                     <Button
                                         onClick={handleChangeChain}
                                         variant="contained"
@@ -88,18 +82,18 @@ const Header: React.FC = () => {
                                     >
                                         Change Network to Hardhat
                                     </Button>
-                                    :
+                                ) : (
                                     <Button
                                         onClick={handleChangeChain}
                                         variant="contained"
                                         color="secondary"
                                         sx={{ ml: 2 }}
                                     >
-                                        Network: { SUPPORTED_NETWORKS_INFO.HARDHAT.name }
+                                        Network: {SUPPORTED_NETWORKS_INFO.HARDHAT.name}
                                     </Button>
-                                }
+                                )}
                             </Box>
-                            :
+                        ) : (
                             <>
                                 <Button
                                     onClick={handleConnect}
@@ -109,10 +103,9 @@ const Header: React.FC = () => {
                                     Connect Wallet
                                 </Button>
                             </>
-                        }
+                        )}
                     </Box>
                 </Box>
-
             </AppBar>
         </>
     )

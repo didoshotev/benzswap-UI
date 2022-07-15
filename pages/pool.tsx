@@ -5,13 +5,12 @@ import { PoolsList } from '../components/liquidity/PoolsList/PoolList'
 import { StyledBox } from '../shared/components/StyledBox/StyledBox'
 
 const Pool: NextPage = () => {
-
     return (
         <>
             <Container maxWidth="xl">
                 <Box mb={4}>
                     <StyledBox>
-                        <Typography variant='h6'>Uniswap pools</Typography>
+                        <Typography variant="h6">Uniswap pools</Typography>
                     </StyledBox>
                 </Box>
                 <PoolsList />
