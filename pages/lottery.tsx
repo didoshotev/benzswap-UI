@@ -1,14 +1,10 @@
 // @ts-nocheck
 import { Box, Button, Typography } from '@mui/material'
-import { BigNumber, Contract, ethers } from 'ethers'
-import type { NextPage } from 'next'
+import { BigNumber, ethers } from 'ethers'
 import { ReactElement, useEffect, useState } from 'react'
 import { useMoralis, useWeb3Contract } from 'react-moralis'
 import { abi, contactAddresses } from '../constants'
-import {
-    LotteryContextProvider,
-    useLottery,
-} from '../shared/lottery/context/LotteryContextProvider'
+import { LotteryContextProvider } from '../shared/lottery/context/LotteryContextProvider'
 import { NextPageWithLayout } from './_app'
 
 const Lottery: NextPageWithLayout = () => {

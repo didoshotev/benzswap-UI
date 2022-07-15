@@ -1,6 +1,5 @@
-import { Box, Container, Paper, Typography } from '@mui/material'
+import { Box, Container, Typography } from '@mui/material'
 import type { NextPage } from 'next'
-import { AddLiquidityModal } from '../components/liquidity/AddLiquidity/AddLiquidity'
 import { PoolsList } from '../components/liquidity/PoolsList/PoolList'
 import { StyledBox } from '../shared/components/StyledBox/StyledBox'
 
