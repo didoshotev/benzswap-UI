@@ -27,8 +27,8 @@ const Lottery: NextPage = () => {
 
     useEffect(() => {
         // console.log('benzSwap: ', benzSwap)
-        // const fee = await 
-        if (!benzSwap) return
+        // const fee = await
+        if (!benzSwap) { return }
         (async () => {
             await fetchLotteryData()
         })()
