@@ -1,9 +1,9 @@
 import { Provider } from '@ethersproject/providers'
 import { Contract, ethers } from 'ethers'
 import { IConfiguration } from '../../config/Configuration'
-import ERC20 from '../benz/ERC20'
+import ERC20 from './ERC20'
 
-export class Lottery {
+export class BenzSwap {
     config: IConfiguration
 
     account?: string
@@ -40,9 +40,7 @@ export class Lottery {
         }
     }
 
-    unlockContracts(provider: any, account: string) {
-        this.account = account
-
+    unlockContracts() {
         if (!this.signer) {
             console.log('No signer found!')
             return

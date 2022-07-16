@@ -4,9 +4,9 @@ import type { AppProps } from 'next/app'
 import { ReactElement, ReactNode } from 'react'
 import { MoralisProvider } from 'react-moralis'
 import { UseWalletProvider } from 'use-wallet'
-import { BenzContextProvider } from '../shared/benz/context/Benz/BenzContextProvider'
+import { Web3ContextProvider } from '../shared/web3/Web3ContextProvider'
 import Header from '../shared/components/Header/Header'
-import { LotteryContextProvider } from '../shared/lottery/context/LotteryContextProvider'
+import { BenzSwapContextProvider } from '../shared/benzSwap/BenzSwapContextProvider'
 import '../styles/globals.css'
 import { theme } from '../styles/mui/theme'
 
@@ -33,8 +33,8 @@ const Providers: React.FC<any> = ({ children }) => {
         <>
             <StyledEngineProvider injectFirst>
                 <MoralisProvider initializeOnMount={false}>
-                    <BenzContextProvider>
-                        <LotteryContextProvider>
+                    <Web3ContextProvider>
+                        <BenzSwapContextProvider>
                             <UseWalletProvider
                                 connectors={{
                                     injected: {
@@ -48,8 +48,8 @@ const Providers: React.FC<any> = ({ children }) => {
                                     {children}
                                 </ThemeProvider>
                             </UseWalletProvider>
-                        </LotteryContextProvider>
-                    </BenzContextProvider>
+                        </BenzSwapContextProvider>
+                    </Web3ContextProvider>
                 </MoralisProvider>
             </StyledEngineProvider>
         </>

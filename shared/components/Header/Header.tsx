@@ -2,18 +2,16 @@ import { AppBar, Box, Button, Menu } from '@mui/material'
 import Link from 'next/link'
 import { useWallet } from 'use-wallet'
 import { shortenAddress } from '../../utils/format'
-import { addNetwork, changeNetwork, shouldChangeNetwork } from '../../utils/window-ethereum'
-import configuration from '../../config'
 import { useMoralis } from 'react-moralis'
 import { useEffect } from 'react'
-import { useBenzContext } from '../../benz/context/Benz/BenzContextProvider'
+import { useWeb3Context } from '../../web3/Web3ContextProvider'
 import { SUPPORTED_NETWORKS, SUPPORTED_NETWORKS_INFO } from '../../utils/constants'
 
 const Header: React.FC = () => {
     // const { connect, isConnected, account } = useWallet();
     const { enableWeb3, isWeb3Enabled, isWeb3EnableLoading, account, Moralis, deactivateWeb3 } =
         useMoralis()
-    const { connectWeb3, changeChainTo, chainId } = useBenzContext()
+    const { connectWeb3, changeChainTo, chainId } = useWeb3Context()
 
     const handleConnect = async () => {
         connectWeb3()
@@ -69,7 +67,7 @@ const Header: React.FC = () => {
                     <Box>
                         {account ? (
                             <Box display="flex">
-                                <Link href="/profile">
+                                <Link passHref={true} href="/profile">
                                     <Button variant="contained">{shortenAddress(account)}</Button>
                                 </Link>
                                 {chainId !== SUPPORTED_NETWORKS_INFO.HARDHAT.chainId ? (

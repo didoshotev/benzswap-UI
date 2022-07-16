@@ -1,20 +1,15 @@
 import { ethers, providers } from 'ethers'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useChain, useMoralis } from 'react-moralis'
-import { ISupportedNetworks, SUPPORTED_NETWORKS, TypeChain } from '../../../utils/constants'
+import { ISupportedNetworks, SUPPORTED_NETWORKS, TypeChain } from '../utils/constants'
 
-interface IBenzContext {
-    // account: ,
-    // chainId, isWeb3Enabled, connectWeb3
-}
-
-const BenzContext = createContext<any>(null)
+const Web3Context = createContext<any>(null)
 
 export type IProps = {
     children: React.ReactNode
 }
 
-const BenzContextProvider: React.FC<IProps> = ({ children }) => {
+const Web3ContextProvider: React.FC<IProps> = ({ children }) => {
     const {
         account,
         isWeb3Enabled,
@@ -101,15 +96,15 @@ const BenzContextProvider: React.FC<IProps> = ({ children }) => {
         changeChainTo,
     }
 
-    return <BenzContext.Provider value={value}>{children}</BenzContext.Provider>
+    return <Web3Context.Provider value={value}>{children}</Web3Context.Provider>
 }
 
-const useBenzContext = () => {
-    const context = useContext(BenzContext)
+const useWeb3Context = () => {
+    const context = useContext(Web3Context)
     if (!context) {
-        throw new Error('Make sure useBenzContext is within BenzContextProvider!')
+        throw new Error('Make sure useWeb3Context is within Web3ContextProvider!')
     }
     return context
 }
 
-export { BenzContextProvider, BenzContext, useBenzContext }
+export { Web3ContextProvider, Web3Context, useWeb3Context }
