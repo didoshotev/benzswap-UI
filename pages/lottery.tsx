@@ -2,78 +2,78 @@
 import { Box, Button, Typography } from '@mui/material'
 import { BigNumber, ethers } from 'ethers'
 import { useEffect, useState } from 'react'
-import { useMoralis, useWeb3Contract } from 'react-moralis'
-import { abi, contactAddresses } from '../constants'
 import { useBenzSwap } from '../shared/benzSwap/BenzSwapContextProvider'
 import type { NextPage } from 'next'
+import { useNotification } from 'web3uikit'
+
+export type LotteryMetadataType = {
+    fee: BigNumber | null
+    participantsCount: string
+}
 
 const Lottery: NextPage = () => {
-    const { chainId: chainIdHex, isWeb3Enabled } = useMoralis()
-    const chainId: any = parseInt(chainIdHex)
-    const raffleAddress =
-        chainId in contactAddresses ? contactAddresses[chainId.toString()][0] : null
-    const [numberOfPlayers, setNumberOfPlayers] = useState<BigNumber>(BigNumber.from(0))
-
-    const [raffleInstance, setRaffleInstance] = useState(null)
-
     const { benzSwap } = useBenzSwap()
-    const [entranceFee, setEntranceFee] = useState<string | null>(null)
+    const dispatch = useNotification()
+    const [lotteryMetadata, setLotteryMetadata] = useState<LotteryMetadataType>({
+        fee: null,
+        participantsCount: '0',
+    })
 
     const fetchLotteryData = async () => {
-        const fee = await benzSwap.contracts.Raffle.getEntranceFee()
-        console.log('fee: ', ethers.utils.formatEther(fee))
-        setEntranceFee(ethers.utils.formatEther(fee))
+        try {
+            const fee = await benzSwap.contracts.Raffle.getEntranceFee()
+            const participants = await benzSwap.contracts.Raffle.getNumberOfPlayers()
+            const recentWinner = await benzSwap.contracts.Raffle.getRecentWinner()
+
+            setLotteryMetadata({
+                fee,
+                participantsCount: participants.toString(),
+            })
+        } catch (error) {
+            console.log('Error while fetching Lottery data')
+            console.log('ERROR: ', error)
+        }
     }
 
     useEffect(() => {
-        // console.log('benzSwap: ', benzSwap)
-        // const fee = await
-        if (!benzSwap) { return }
+        if (!benzSwap) {
+            return
+        }
         (async () => {
             await fetchLotteryData()
         })()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [benzSwap])
 
-    // const { data, error, fetch, isFetching, isLoading }
-    // const { runContractFunction: getEnteranceFee } = useWeb3Contract({
-    //     abi: abi,
-    //     contractAddress: raffleAddress,
-    //     functionName: 'getEntranceFee',
-    // })
+    const handleEnterRaffle = async () => {
+        try {
+            console.log('lotteryMetadata', lotteryMetadata)
+            const enterRaffleTx = await benzSwap.contracts.Raffle.enterRaffle({
+                value: lotteryMetadata.fee,
+            })
+            await enterRaffleTx.wait(1)
+            dispatch({
+                type: 'info',
+                message: 'Succesfully entered the Lottery!',
+                title: 'Tx Notification',
+                position: 'topR',
+                icon: 'bell',
+            })
 
-    // const { runContractFunction: getNumberOfPlayers } = useWeb3Contract({
-    //     abi: abi,
-    //     contractAddress: raffleAddress,
-    //     functionName: 'getNumberOfPlayers',
-    // })
-
-    // useEffect(() => {
-    //     const asyncWrapper = async () => {
-    //         // const raffle = new Contract(raffleAddress, abi, )
-
-    //         const newEntranceFee = await getEnteranceFee()
-    //         const newNumberOfPlayers = await getNumberOfPlayers()
-    //         if (!newEntranceFee) {
-    //             return
-    //         }
-    //         setEnteranceFee(newEntranceFee)
-    //         setNumberOfPlayers(newNumberOfPlayers)
-    //     }
-
-    //     asyncWrapper()
-    // }, [isWeb3Enabled, getEnteranceFee, getNumberOfPlayers])
-
-    // const handleEnterRaffle = async () => {}
+            await fetchLotteryData()
+        } catch (error) {
+            console.log('Error while entering the Lottery!')
+        }
+    }
 
     return (
         <Box textAlign="center" color="#fff">
             <h2>Lottery Page</h2>
 
-            {/* <Box mt={10} mb={5}>
-                {enteranceFee ? (
+            <Box mt={10} mb={5}>
+                {lotteryMetadata.fee ? (
                     <Typography variant="h5">
-                        Entrance Fee: {ethers.utils.formatEther(enteranceFee)} ETH
+                        Entrance Fee: {ethers.utils.formatUnits(lotteryMetadata.fee, 'ether')} ETH
                     </Typography>
                 ) : (
                     <>No data about Entrance Fee</>
@@ -83,11 +83,12 @@ const Lottery: NextPage = () => {
             <Button variant="contained" color="primary" onClick={handleEnterRaffle}>
                 Enter Raffle
             </Button>
+
             <Box mt={2}>
                 <Typography variant="h6">
-                    Participants Count: {numberOfPlayers.toString()}
+                    Participants Count: {lotteryMetadata.participantsCount}
                 </Typography>
-            </Box> */}
+            </Box>
         </Box>
     )
 }

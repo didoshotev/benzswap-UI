@@ -3,6 +3,10 @@ import Configuration from '../../config/Configuration'
 import { useWeb3Context } from '../web3/Web3ContextProvider'
 import { BenzSwap } from './BenzSwap'
 
+export type BenzSwapContextType = {
+    benzSwap: BenzSwap
+}
+
 export const BenzSwapContext = createContext<any>(null)
 
 export type PropTypes = {
@@ -32,7 +36,7 @@ export const BenzSwapContextProvider: React.FC<PropTypes> = ({ children }) => {
 }
 
 export const useBenzSwap = () => {
-    const context = useContext(BenzSwapContext)
+    const context = useContext<BenzSwapContextType>(BenzSwapContext)
 
     if (!context) {
         throw new Error('BenzSwapContext must be use within BenzSwapContextProvider!')

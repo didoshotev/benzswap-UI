@@ -11,8 +11,8 @@ interface IConfiguration {
 
 const Configuration: { [env: string]: IConfiguration } = {
     development: {
-        chainId: SUPPORTED_NETWORKS_INFO.HARDHAT.chainId,
-        networkName: SUPPORTED_NETWORKS_INFO.HARDHAT.name,
+        chainId: SUPPORTED_NETWORKS_INFO.HARDHAT_LOCAL.chainId,
+        networkName: SUPPORTED_NETWORKS_INFO.HARDHAT_LOCAL.name,
         forkedNetoworkChainId: null,
         deployments: localhost_deployments.hardhat,
         externalTokens: {

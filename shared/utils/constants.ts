@@ -42,6 +42,11 @@ export const SUPPORTED_NETWORKS_INFO = {
         chainId: 1,
         chainIdHex: '0x1',
     },
+    HARDHAT_LOCAL: {
+        name: 'Hardhat',
+        chainId: 31337,
+        chainIdHex: '0x7A69',
+    },
     HARDHAT: {
         name: 'Hardhat',
         chainId: 1337,
