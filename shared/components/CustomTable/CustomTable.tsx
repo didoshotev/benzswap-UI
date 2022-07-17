@@ -28,9 +28,7 @@ const rows = [
 ]
 
 export const CustomTable = () => {
-    const handleRowClick = () => {
-        console.log('clicked')
-    }
+    const handleRowClick = () => {}
 
     return (
         <TableContainer

@@ -9,6 +9,7 @@ import Header from '../shared/components/Header/Header'
 import { BenzSwapContextProvider } from '../shared/benzSwap/BenzSwapContextProvider'
 import '../styles/globals.css'
 import { theme } from '../styles/mui/theme'
+import { NotificationProvider } from 'web3uikit'
 
 export type NextPageWithLayout = NextPage & {
     getLayout?: (page: ReactElement) => ReactNode
@@ -33,23 +34,25 @@ const Providers: React.FC<any> = ({ children }) => {
         <>
             <StyledEngineProvider injectFirst>
                 <MoralisProvider initializeOnMount={false}>
-                    <Web3ContextProvider>
-                        <BenzSwapContextProvider>
-                            <UseWalletProvider
-                                connectors={{
-                                    injected: {
-                                        chainId: [1, 4],
-                                    },
-                                }}
-                            >
-                                <ThemeProvider theme={theme}>
-                                    <CssBaseline />
-                                    <Header />
-                                    {children}
-                                </ThemeProvider>
-                            </UseWalletProvider>
-                        </BenzSwapContextProvider>
-                    </Web3ContextProvider>
+                    <NotificationProvider>
+                        <Web3ContextProvider>
+                            <BenzSwapContextProvider>
+                                <UseWalletProvider
+                                    connectors={{
+                                        injected: {
+                                            chainId: [1, 4],
+                                        },
+                                    }}
+                                >
+                                    <ThemeProvider theme={theme}>
+                                        <CssBaseline />
+                                        <Header />
+                                        {children}
+                                    </ThemeProvider>
+                                </UseWalletProvider>
+                            </BenzSwapContextProvider>
+                        </Web3ContextProvider>
+                    </NotificationProvider>
                 </MoralisProvider>
             </StyledEngineProvider>
         </>

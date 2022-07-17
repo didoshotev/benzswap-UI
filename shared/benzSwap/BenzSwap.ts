@@ -9,6 +9,7 @@ export class BenzSwap {
     account?: string
     provider: Provider
     signer?: ethers.Signer | null
+    isUnlocked: boolean = false
 
     contracts: { [name: string]: Contract }
     externalTokens: { [name: string]: any }
@@ -58,6 +59,7 @@ export class BenzSwap {
         for (const token of Object.values(this.externalTokens)) {
             token.connect(this.signer)
         }
+        this.isUnlocked = true
     }
 
     getContractByName(name: string): Contract {
@@ -69,5 +71,13 @@ export class BenzSwap {
             return null
         }
         return this.externalTokens[name]
+    }
+
+    getIsUnlocked(): boolean {
+        return this.isUnlocked
+    }
+
+    getBenzSwapSigner(): ethers.Signer | null | undefined {
+        return this.signer
     }
 }
