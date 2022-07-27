@@ -63,6 +63,13 @@ const Header: React.FC = () => {
                             </Link>
                         </Button>
                     </Box>
+                    <Box mr={3}>
+                        <Button>
+                            <Link href="/aave">
+                                <a>AAVE</a>
+                            </Link>
+                        </Button>
+                    </Box>
 
                     <Box>
                         {account ? (
@@ -70,7 +77,7 @@ const Header: React.FC = () => {
                                 <Link passHref={true} href="/profile">
                                     <Button variant="contained">{shortenAddress(account)}</Button>
                                 </Link>
-                                {chainId !== SUPPORTED_NETWORKS_INFO.HARDHAT.chainId ? (
+                                {chainId !== SUPPORTED_NETWORKS_INFO.RINKEBY.chainId ? (
                                     <Button
                                         onClick={handleChangeChain}
                                         variant="contained"
@@ -78,7 +85,7 @@ const Header: React.FC = () => {
                                         disabled={isWeb3EnableLoading}
                                         sx={{ ml: 2 }}
                                     >
-                                        Change Network to Hardhat
+                                        Change Network to Rinkeby
                                     </Button>
                                 ) : (
                                     <Button
@@ -87,7 +94,7 @@ const Header: React.FC = () => {
                                         color="secondary"
                                         sx={{ ml: 2 }}
                                     >
-                                        Network: {SUPPORTED_NETWORKS_INFO.HARDHAT.name}
+                                        Network: {SUPPORTED_NETWORKS_INFO.RINKEBY.name}
                                     </Button>
                                 )}
                             </Box>
